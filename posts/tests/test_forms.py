@@ -66,7 +66,7 @@ class GroupCreateFormTest(TestCase):
             'text': 'Ya',
         }
         response = self.authorized_client.post(
-            reverse('post_edit', kwargs={'username': user, 'post_id': post.id,}),
+            reverse('post_edit', kwargs={'username': user, 'post_id': post.id}),
             data=form_data,
             follow=True
         )
