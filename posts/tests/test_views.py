@@ -36,8 +36,7 @@ class PostPagesTest(TestCase):
             'index.html': reverse('index'),
             'group.html': (reverse('group_posts', kwargs={'slug': 'test'})),
             'new_post.html': reverse('new_post'),
-            'profile.html': (reverse('profile', kwargs={'username': self.user}))
-            }
+            'profile.html': (reverse('profile', kwargs={'username': self.user}))}
 
         for template, reverse_name in template_pages_name.items():
             with self.subTest(reverse_name=reverse_name):
@@ -94,7 +93,7 @@ class PostPagesTest(TestCase):
         response = self.authorized_client.get('/group/test/')
         post = PostPagesTest.post.group
         self.assertEquals(post, response.context.get('page')[0].group)
-  
+
 
 class PaginatorViewsTest(TestCase):
     @classmethod

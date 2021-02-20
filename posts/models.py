@@ -14,8 +14,8 @@ class Group(models.Model):
                                    help_text='Описание группы')
 
     class Meta:
-	    verbose_name_plural = 'Сообщества'
-	    verbose_name = 'Сообщество'
+        verbose_name_plural = 'Сообщества'
+        verbose_name = 'Сообщество'
 
     def __str__(self):
         return self.title

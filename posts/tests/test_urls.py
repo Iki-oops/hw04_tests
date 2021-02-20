@@ -39,7 +39,8 @@ class StaticURLTests(TestCase):
             'new_post': '/new/',
             'profile': reverse('profile', kwargs={'username': self.user}),
             'post': reverse('post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
-            'post_edit': reverse('post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post_edit': reverse(
+                'post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
         }
         for value in urls.values():
             with self.subTest(value=value):
@@ -65,7 +66,8 @@ class StaticURLTests(TestCase):
             'new_post': '/new/',
             'profile': reverse('profile', kwargs={'username': self.user}),
             'post': reverse('post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
-            'post_edit': reverse('post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post_edit': reverse(
+                'post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
         }
         for value in available_urls.values():
             with self.subTest(value=value):

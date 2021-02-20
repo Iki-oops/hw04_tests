@@ -70,8 +70,8 @@ class GroupCreateFormTest(TestCase):
                     kwargs={
                         'username': user,
                         'post_id': post.id,
-                    }
-                ),
+                        }
+                    ),
             data=form_data,
             follow=True
         )
