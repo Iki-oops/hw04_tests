@@ -51,7 +51,8 @@ def post_view(request, username, post_id):
 
 @login_required
 def post_edit(request, username, post_id):
-    post = get_object_or_404(Post, author__username = username, id = post_id)
+    post = get_object_or_404(Post, author__username=username, id=post_id)
+
     group = post.group
 
     if request.method != 'POST':
