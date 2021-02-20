@@ -54,7 +54,7 @@ class GroupCreateFormTest(TestCase):
             follow=True
         )
         self.assertRedirects(response, reverse('index'))
-        self.assertEqual(Post.objects.count(), posts_count+1)
+        self.assertEqual(Post.objects.count(), posts_count + 1)
         self.assertTrue(Group.objects.filter(slug='yoyo').exists())
 
     def test_changed_form_data(self):
@@ -69,10 +69,11 @@ class GroupCreateFormTest(TestCase):
             reverse('post_edit',
                     kwargs={
                         'username': user,
-                        'post_id': post.id
-                        }
-                    ),
+                        'post_id': post.id,
+                    }
+                ),
             data=form_data,
             follow=True
         )
         self.assertEqual(Post.objects.filter(id=post.id).last().text, 'Ya')
+        self.assertRedirects(response, reverse('post', args=[user, post.id]))

@@ -35,11 +35,9 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-# Мои приложения
     'posts',
     'users',
     'about',
-# Дефолтные приложения
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

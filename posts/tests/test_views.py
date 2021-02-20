@@ -36,8 +36,8 @@ class PostPagesTest(TestCase):
             'index.html': reverse('index'),
             'group.html': (reverse('group_posts', kwargs={'slug': 'test'})),
             'new_post.html': reverse('new_post'),
-            'profile.html': (reverse('profile', kwargs={'username': self.user,})),
-        }
+            'profile.html': (reverse('profile', kwargs={'username': self.user}))
+            }
 
         for template, reverse_name in template_pages_name.items():
             with self.subTest(reverse_name=reverse_name):
@@ -64,9 +64,8 @@ class PostPagesTest(TestCase):
             with self.subTest(value=value):
                 form_field = response.context.get('form').fields.get(value)
                 self.assertIsInstance(form_field, excepted)
-    
+
     def test_group_posts_page_show_correct_context(self):
-        group = PostPagesTest.group
         response = self.authorized_client.get(
             reverse('group_posts', kwargs={'slug': 'test'}))
         group_title = response.context.get('group').title
@@ -76,16 +75,15 @@ class PostPagesTest(TestCase):
         self.assertEquals(group_slug, 'test')
         self.assertEquals(group_description, 'Домашние тесты')
 
-
     def test_profile_list_show_correct_context(self):
-        response = self.authorized_client.get(reverse('profile', kwargs={'username': PostPagesTest.user}))
+        response = self.authorized_client.get(
+            reverse('profile', kwargs={'username': PostPagesTest.user}))
         profile_text_0 = response.context.get('page')[0].text
         profile_author_0 = response.context.get('page')[0].author
         profile_group_0 = response.context.get('page')[0].group
         self.assertEquals(profile_text_0, 'ya bobyor')
         self.assertEquals(profile_author_0, PostPagesTest.user)
         self.assertEquals(profile_group_0, PostPagesTest.group)
-
 
     def test_created_post_in_index(self):
         response = self.authorized_client.get(reverse('index'))
@@ -96,7 +94,7 @@ class PostPagesTest(TestCase):
         response = self.authorized_client.get('/group/test/')
         post = PostPagesTest.post.group
         self.assertEquals(post, response.context.get('page')[0].group)
-    
+  
 
 class PaginatorViewsTest(TestCase):
     @classmethod
@@ -109,7 +107,6 @@ class PaginatorViewsTest(TestCase):
         )
         cls.group = Group.objects.get(slug='test')
         cls.user = get_user_model().objects.create_user(username='Ya')
-        objects = []
         for i in range(13):
             Post.objects.create(
                 id=i,
@@ -117,8 +114,7 @@ class PaginatorViewsTest(TestCase):
                 author=cls.user,
                 group=cls.group,
             )
-            post = Post.objects.get(id=i)
-        
+
     def setUp(self):
         self.guest_client = Client()
         self.authorized_client = Client()

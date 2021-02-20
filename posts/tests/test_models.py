@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 from posts.models import Post, Group
@@ -15,7 +15,7 @@ class PostModelTest(TestCase):
             description='bread',
         )
         cls.group = Group.objects.get(slug='churches')
-        
+
         Post.objects.create(
             id=1,
             text='crush',
@@ -34,7 +34,7 @@ class PostModelTest(TestCase):
             with self.subTest(value=value):
                 self.assertEquals(
                     post._meta.get_field(value).verbose_name, expected)
-    
+
     def test_help_text(self):
         post = PostModelTest.post
         field_help_text = {
