@@ -53,7 +53,8 @@ class GroupCreateFormTest(TestCase):
         self.assertRedirects(response, reverse('index'))
         self.assertEqual(Post.objects.count(), posts_count + 1)
         self.assertTrue(Group.objects.filter(slug='yoyo').exists())
-        self.assertIn(GroupCreateFormTest.post.group, Group.objects.filter(slug='yoyo'))
+        self.assertIn(GroupCreateFormTest.post.group,
+                      Group.objects.filter(slug='yoyo'))
 
     def test_changed_form_data(self):
         post = GroupCreateFormTest.post
@@ -64,7 +65,8 @@ class GroupCreateFormTest(TestCase):
             'text': 'Ya',
         }
         response = self.authorized_client.post(
-            reverse('post_edit', kwargs={'username': user, 'post_id': post.id}),
+            reverse(
+                'post_edit', kwargs={'username': user, 'post_id': post.id}),
             data=form_data,
             follow=True
         )

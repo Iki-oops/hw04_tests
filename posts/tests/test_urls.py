@@ -35,10 +35,10 @@ class StaticURLTests(TestCase):
             'group': f'/group/{StaticURLTests.group.slug}/',
             'new_post': '/new/',
             'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse(
-                'post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
-            'post_edit': reverse(
-                'post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post': reverse('post',
+                kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post_edit': reverse('post_edit',
+                kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
         }
         for value in urls.values():
             with self.subTest(value=value):
@@ -50,7 +50,12 @@ class StaticURLTests(TestCase):
             'index': '/',
             'group': '/group/churches/',
             'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse('post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post': reverse('post',
+                kwargs={
+                    'username': StaticURLTests.user,
+                    'post_id': StaticURLTests.post.id
+                }
+            ),
         }
         for value in available_urls.values():
             with self.subTest(value=value):
@@ -63,9 +68,14 @@ class StaticURLTests(TestCase):
             'group': '/group/churches/',
             'new_post': '/new/',
             'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse('post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
-            'post_edit': reverse(
-                'post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post': reverse('post',
+                kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post_edit': reverse('post_edit',
+                kwargs={
+                    'username': StaticURLTests.user,
+                    'post_id': StaticURLTests.post.id
+                }
+            ),
         }
         for value in available_urls.values():
             with self.subTest(value=value):
@@ -78,7 +88,12 @@ class StaticURLTests(TestCase):
             'group': '/group/churches/',
             'new_post': '/new/',
             'profile': reverse('profile', kwargs={'username': StaticURLTests.user}),
-            'post': reverse('post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post': reverse('post',
+                kwargs={
+                    'username': StaticURLTests.user,
+                    'post_id': StaticURLTests.post.id
+                }
+            ),
         }
         for value in available_urls.values():
             with self.subTest(value=value):
@@ -91,9 +106,18 @@ class StaticURLTests(TestCase):
             'group.html': '/group/churches/',
             'new_post.html': '/new/',
             'profile.html': reverse('profile', kwargs={'username': self.user}),
-            'post.html': reverse('post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
-            'post_edit.html': reverse(
-                'post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post.html': reverse('post',
+                kwargs={
+                    'username': StaticURLTests.user,
+                    'post_id': StaticURLTests.post.id
+                }
+            ),
+            'post_edit.html': reverse('post_edit',
+                kwargs={
+                    'username': StaticURLTests.user,
+                    'post_id': StaticURLTests.post.id
+                }
+            ),
         }
         for template, url in self.template_url_names.items():
             with self.subTest():
