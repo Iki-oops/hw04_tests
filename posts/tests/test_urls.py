@@ -108,7 +108,8 @@ class StaticURLTests(TestCase):
                 'profile',
                 kwargs={'username': StaticURLTests.user}
             ),
-            'post': reverse('post',
+            'post': reverse(
+                'post',
                 kwargs={
                     'username': StaticURLTests.user,
                     'post_id': StaticURLTests.post.id
