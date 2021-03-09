@@ -9,20 +9,17 @@ class PostModelTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         user = get_user_model().objects.create_user(username='Ya_bober')
-        Group.objects.create(
+        cls.group = Group.objects.create(
             title='church',
             slug='churches',
             description='bread',
         )
-        cls.group = Group.objects.get(slug='churches')
 
-        Post.objects.create(
-            id=1,
+        cls.post = Post.objects.create(
             text='crush',
             author=user,
             group=cls.group,
         )
-        cls.post = Post.objects.get(id=1)
 
     def test_verbose_name(self):
         post = PostModelTest.post

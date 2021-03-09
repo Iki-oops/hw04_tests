@@ -4,10 +4,12 @@ from django.core.paginator import Paginator
 
 from .models import Post, Group, User
 from .forms import PostForm
+# from rest_framework import paginator
 
 
 def index(request):
     posts = Post.objects.all()
+    # paginator = paginator.Paginator(posts)
     paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -55,13 +57,10 @@ def post_edit(request, username, post_id):
 
     group = post.group
 
-    if request.method != 'POST':
-        form = PostForm(instance=post)
-    else:
-        form = PostForm(instance=post, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('post', username=post.author.username, post_id=post.id)
+    form = PostForm(request.POST or None, instance=post)
+    if form.is_valid():
+        form.save()
+        return redirect('post', username=post.author.username, post_id=post.id)
 
     context = {
         'post': post,

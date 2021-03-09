@@ -11,19 +11,16 @@ class PostPagesTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user = get_user_model().objects.create_user(username='YaBobyor')
-        Group.objects.create(
+        cls.group = Group.objects.create(
             title='Тест',
             slug='test',
             description='Домашние тесты',
         )
-        cls.group = Group.objects.get(slug='test')
-        Post.objects.create(
-            id=1,
+        cls.post = Post.objects.create(
             text='ya bobyor',
             author=cls.user,
             group=cls.group,
         )
-        cls.post = Post.objects.get(id=1)
 
     def setUp(self):
         self.guest_client = Client()

@@ -9,20 +9,17 @@ class StaticURLTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        Group.objects.create(
+        cls.group = Group.objects.create(
             title='church',
             slug='churches',
             description='bread',
         )
-        group = Group.objects.get(slug='churches')
         cls.user = get_user_model().objects.create(username='Ya')
-        Post.objects.create(
-            id=1,
+        cls.post = Post.objects.create(
             text='Ya',
             author=cls.user,
-            group=group,
+            group=cls.group,
         )
-        cls.post = Post.objects.get(id=1)
 
     def setUp(self):
         self.guest_client = Client()
@@ -35,10 +32,11 @@ class StaticURLTests(TestCase):
     def test_urls_status_code(self):
         urls = {
             'index': '/',
-            'group': '/group/churches/',
+            'group': f'/group/{StaticURLTests.group.slug}/',
             'new_post': '/new/',
             'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse('post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
+            'post': reverse(
+                'post', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
             'post_edit': reverse(
                 'post_edit', kwargs={'username': StaticURLTests.user, 'post_id': StaticURLTests.post.id}),
         }
@@ -101,12 +99,3 @@ class StaticURLTests(TestCase):
             with self.subTest():
                 response = self.authorized_client.get(url)
                 self.assertTemplateUsed(response, template)
-
-    # def test_url_post_edit_redirect(self):
-    #     response = self.authorized_client.get(
-    #         reverse('post_edit', kwargs={'username':StaticURLTests.user, 'post_id':StaticURLTests.post.id}),
-    #         follow=True
-    #     )
-    #     self.assertRedirects(
-    #         response,
-    #         reverse('post', kwargs={'username':StaticURLTests.user, 'post_id':StaticURLTests.post.id}))

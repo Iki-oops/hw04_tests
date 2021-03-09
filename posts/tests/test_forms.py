@@ -11,19 +11,16 @@ class GroupCreateFormTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user = get_user_model().objects.create_user(username='Ya')
-        Group.objects.create(
+        cls.group = Group.objects.create(
             title='Yo-Yo',
             slug='yoyo',
             description='Yo-Yo is cool'
         )
-        cls.group = Group.objects.get(slug='yoyo')
-        Post.objects.create(
-            id=1,
+        cls.post = Post.objects.create(
             text='Yo-Yo test text',
             author=cls.user,
             group=cls.group,
         )
-        cls.post = Post.objects.get(id=1)
         cls.form = PostForm()
 
     def setUp(self):
@@ -56,6 +53,7 @@ class GroupCreateFormTest(TestCase):
         self.assertRedirects(response, reverse('index'))
         self.assertEqual(Post.objects.count(), posts_count + 1)
         self.assertTrue(Group.objects.filter(slug='yoyo').exists())
+        self.assertIn(GroupCreateFormTest.post.group, Group.objects.filter(slug='yoyo'))
 
     def test_changed_form_data(self):
         post = GroupCreateFormTest.post
@@ -70,5 +68,6 @@ class GroupCreateFormTest(TestCase):
             data=form_data,
             follow=True
         )
-        self.assertEqual(Post.objects.filter(id=post.id).last().text, 'Ya')
+        self.assertEqual(Post.objects.first().text, 'Ya')
+        self.assertEqual(Post.objects.first().group.id, group.id)
         self.assertRedirects(response, reverse('post', args=[user, post.id]))
