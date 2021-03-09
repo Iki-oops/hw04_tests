@@ -60,7 +60,8 @@ class StaticURLTests(TestCase):
             'index': '/',
             'group': '/group/churches/',
             'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse('post',
+            'post': reverse(
+                'post',
                 kwargs={
                     'username': StaticURLTests.user,
                     'post_id': StaticURLTests.post.id
@@ -103,7 +104,10 @@ class StaticURLTests(TestCase):
             'index': '/',
             'group': '/group/churches/',
             'new_post': '/new/',
-            'profile': reverse('profile', kwargs={'username': StaticURLTests.user}),
+            'profile': reverse(
+                'profile',
+                kwargs={'username': StaticURLTests.user}
+            ),
             'post': reverse('post',
                 kwargs={
                     'username': StaticURLTests.user,
@@ -122,13 +126,15 @@ class StaticURLTests(TestCase):
             'group.html': '/group/churches/',
             'new_post.html': '/new/',
             'profile.html': reverse('profile', kwargs={'username': self.user}),
-            'post.html': reverse('post',
+            'post.html': reverse(
+                'post',
                 kwargs={
                     'username': StaticURLTests.user,
                     'post_id': StaticURLTests.post.id
                 }
             ),
-            'post_edit.html': reverse('post_edit',
+            'post_edit.html': reverse(
+                'post_edit',
                 kwargs={
                     'username': StaticURLTests.user,
                     'post_id': StaticURLTests.post.id
