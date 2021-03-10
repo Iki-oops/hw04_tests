@@ -1,6 +1,5 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from django.urls import reverse
 
 from posts.models import Group, Post
 
@@ -36,7 +35,8 @@ class StaticURLTests(TestCase):
             'new_post': '/new/',
             'profile': f'/{StaticURLTests.user}/',
             'post': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
-            'post_edit': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/edit/',
+            'post_edit': (f'/{StaticURLTests.user}/'
+                          f'{StaticURLTests.post.id}/edit/'),
         }
         for value in urls.values():
             with self.subTest(value=value):
@@ -62,7 +62,8 @@ class StaticURLTests(TestCase):
             'new_post': '/new/',
             'profile': f'/{StaticURLTests.user}/',
             'post': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
-            'post_edit': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/edit/',
+            'post_edit': (f'/{StaticURLTests.user}/'
+                          f'{StaticURLTests.post.id}/edit/'),
         }
         for value in available_urls.values():
             with self.subTest(value=value):
@@ -89,7 +90,8 @@ class StaticURLTests(TestCase):
             'new_post.html': '/new/',
             'profile.html': f'/{StaticURLTests.user}/',
             'post.html': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
-            'post_edit.html': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/edit/',
+            'post_edit': (f'/{StaticURLTests.user}/'
+                          f'{StaticURLTests.post.id}/edit/'),
         }
         for template, url in self.template_url_names.items():
             with self.subTest():
