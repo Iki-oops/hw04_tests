@@ -34,21 +34,9 @@ class StaticURLTests(TestCase):
             'index': '/',
             'group': f'/group/{StaticURLTests.group.slug}/',
             'new_post': '/new/',
-            'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse(
-                'post',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
-            'post_edit': reverse(
-                'post_edit',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
+            'profile': f'/{StaticURLTests.user}/',
+            'post': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
+            'post_edit': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/edit/',
         }
         for value in urls.values():
             with self.subTest(value=value):
@@ -58,15 +46,9 @@ class StaticURLTests(TestCase):
     def test_url_anonymous(self):
         available_urls = {
             'index': '/',
-            'group': '/group/churches/',
-            'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse(
-                'post',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
+            'group': f'/group/{StaticURLTests.group.slug}/',
+            'profile': f'/{StaticURLTests.user}/',
+            'post': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
         }
         for value in available_urls.values():
             with self.subTest(value=value):
@@ -76,23 +58,11 @@ class StaticURLTests(TestCase):
     def test_url_author_post(self):
         available_urls = {
             'index': '/',
-            'group': '/group/churches/',
+            'group': f'/group/{StaticURLTests.group.slug}/',
             'new_post': '/new/',
-            'profile': reverse('profile', kwargs={'username': self.user}),
-            'post': reverse(
-                'post',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
-            'post_edit': reverse(
-                'post_edit',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
+            'profile': f'/{StaticURLTests.user}/',
+            'post': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
+            'post_edit': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/edit/',
         }
         for value in available_urls.values():
             with self.subTest(value=value):
@@ -104,17 +74,8 @@ class StaticURLTests(TestCase):
             'index': '/',
             'group': '/group/churches/',
             'new_post': '/new/',
-            'profile': reverse(
-                'profile',
-                kwargs={'username': StaticURLTests.user}
-            ),
-            'post': reverse(
-                'post',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
+            'profile': f'/{StaticURLTests.user}/',
+            'post': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
         }
         for value in available_urls.values():
             with self.subTest(value=value):
@@ -124,23 +85,11 @@ class StaticURLTests(TestCase):
     def test_urls_uses_correct_template(self):
         self.template_url_names = {
             'index.html': '/',
-            'group.html': '/group/churches/',
+            'group.html': f'/group/{StaticURLTests.group.slug}/',
             'new_post.html': '/new/',
-            'profile.html': reverse('profile', kwargs={'username': self.user}),
-            'post.html': reverse(
-                'post',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
-            'post_edit.html': reverse(
-                'post_edit',
-                kwargs={
-                    'username': StaticURLTests.user,
-                    'post_id': StaticURLTests.post.id
-                }
-            ),
+            'profile.html': f'/{StaticURLTests.user}/',
+            'post.html': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',
+            'post_edit.html': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/edit/',
         }
         for template, url in self.template_url_names.items():
             with self.subTest():

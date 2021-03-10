@@ -30,11 +30,11 @@ class PostPagesTest(TestCase):
 
     def test_pages_uses_correct_template(self):
         template_pages_name = {
-            'index.html': reverse('index'),
-            'group.html': (reverse('group_posts', kwargs={'slug': 'test'})),
-            'new_post.html': reverse('new_post'),
-            'profile.html': (
-                reverse('profile', kwargs={'username': self.user}))}
+            'index.html': '/',
+            'group.html': f'/group/{PostPagesTest.group.slug}/',
+            'new_post.html': '/new/',
+            'profile.html': f'/{PostPagesTest.user}/'
+        }
 
         for template, reverse_name in template_pages_name.items():
             with self.subTest(reverse_name=reverse_name):
@@ -43,9 +43,10 @@ class PostPagesTest(TestCase):
 
     def test_index_list_show_correct_context(self):
         response = self.authorized_client.get(reverse('index'))
-        post_text_0 = response.context.get('page')[0].text
-        post_author_0 = response.context.get('page')[0].author
-        post_group_0 = response.context.get('page')[0].group
+        get_page = response.context.get('page')[0]
+        post_text_0 = get_page.text
+        post_author_0 = get_page.author
+        post_group_0 = get_page.group
         self.assertEquals(post_text_0, 'ya bobyor')
         self.assertEquals(post_author_0, PostPagesTest.user)
         self.assertEquals(post_group_0, PostPagesTest.group)
@@ -65,9 +66,10 @@ class PostPagesTest(TestCase):
     def test_group_posts_page_show_correct_context(self):
         response = self.authorized_client.get(
             reverse('group_posts', kwargs={'slug': 'test'}))
-        group_title = response.context.get('group').title
-        group_slug = response.context.get('group').slug
-        group_description = response.context.get('group').description
+        get_group = response.context.get('group')
+        group_title = get_group.title
+        group_slug = get_group.slug
+        group_description = get_group.description
         self.assertEquals(group_title, 'Тест')
         self.assertEquals(group_slug, 'test')
         self.assertEquals(group_description, 'Домашние тесты')
@@ -75,9 +77,10 @@ class PostPagesTest(TestCase):
     def test_profile_list_show_correct_context(self):
         response = self.authorized_client.get(
             reverse('profile', kwargs={'username': PostPagesTest.user}))
-        profile_text_0 = response.context.get('page')[0].text
-        profile_author_0 = response.context.get('page')[0].author
-        profile_group_0 = response.context.get('page')[0].group
+        get_page = response.context.get('page')[0]
+        profile_text_0 = get_page.text
+        profile_author_0 = get_page.author
+        profile_group_0 = get_page.group
         self.assertEquals(profile_text_0, 'ya bobyor')
         self.assertEquals(profile_author_0, PostPagesTest.user)
         self.assertEquals(profile_group_0, PostPagesTest.group)

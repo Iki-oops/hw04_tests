@@ -4,13 +4,12 @@ from django.core.paginator import Paginator
 
 from .models import Post, Group, User
 from .forms import PostForm
-# from rest_framework import paginator
+from yatube import settings
 
 
 def index(request):
     posts = Post.objects.all()
-    # paginator = paginator.Paginator(posts)
-    paginator = Paginator(posts, 10)
+    paginator = Paginator(posts, settings.TEN)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {'page': page, 'paginator': paginator}
@@ -20,7 +19,7 @@ def index(request):
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()
-    paginator = Paginator(posts, 10)
+    paginator = Paginator(posts, settings.TEN)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {'group': group, 'page': page, 'paginator': paginator}
@@ -30,7 +29,7 @@ def group_posts(request, slug):
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     author_posts = author.posts.all()
-    paginator = Paginator(author_posts, 10)
+    paginator = Paginator(author_posts, settings.TEN)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {
@@ -73,12 +72,11 @@ def post_edit(request, username, post_id):
 @login_required
 def new_post(request):
     form = PostForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            form.save()
-            return redirect('index')
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        form.save()
+        return redirect('index')
 
     context = {'form': form}
     return render(request, 'new_post.html', context)

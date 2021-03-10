@@ -6,13 +6,13 @@
 <main role="main" class="container">
   <div class="row">
     <div class="col-md-3 mb-3 mt-1">
-      {% include 'includes/card.html' %}
+      {% include 'includes/author_card.html' %}
     </div>
 
     <div class="col-md-9">
       <!-- Начало блока с отдельным постом --> 
       {% for post in page %}
-        {% include 'includes/card_0.html' %}
+        {% include 'includes/post_card.html' %}
       {% endfor %}
       
       {% include 'includes/paginator.html' %}

@@ -52,7 +52,6 @@ class GroupCreateFormTest(TestCase):
         )
         self.assertRedirects(response, reverse('index'))
         self.assertEqual(Post.objects.count(), posts_count + 1)
-        self.assertTrue(Group.objects.filter(slug='yoyo').exists())
         self.assertIn(GroupCreateFormTest.post.group,
                       Group.objects.filter(slug='yoyo'))
 
@@ -70,6 +69,6 @@ class GroupCreateFormTest(TestCase):
             data=form_data,
             follow=True
         )
-        self.assertEqual(Post.objects.first().text, 'Ya')
-        self.assertEqual(Post.objects.first().group.id, group.id)
+        self.assertEqual(Post.objects.last().text, 'Ya')
+        self.assertEqual(Post.objects.last().group.id, group.id)
         self.assertRedirects(response, reverse('post', args=[user, post.id]))
