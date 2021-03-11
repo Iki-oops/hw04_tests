@@ -38,7 +38,7 @@ class GroupCreateFormTest(TestCase):
                 response = GroupCreateFormTest.form.fields[value].label
                 self.assertEquals(response, expected)
 
-    def test_create_group(self):
+    def test_create_post(self):
         posts_count = Post.objects.count()
         group = GroupCreateFormTest.group
         form_data = {
@@ -52,8 +52,8 @@ class GroupCreateFormTest(TestCase):
         )
         self.assertRedirects(response, reverse('index'))
         self.assertEqual(Post.objects.count(), posts_count + 1)
-        self.assertIn(GroupCreateFormTest.post.group,
-                      Group.objects.filter(slug='yoyo'))
+        self.assertTrue(Post.objects.last(),
+                        Post.objects.filter(group=group.id, text='Yo-Yo test',))
 
     def test_changed_form_data(self):
         post = GroupCreateFormTest.post

@@ -73,7 +73,7 @@ class StaticURLTests(TestCase):
     def test_url_not_author_post(self):
         available_urls = {
             'index': '/',
-            'group': '/group/churches/',
+            'group': f'/group/{StaticURLTests.group.slug}/',
             'new_post': '/new/',
             'profile': f'/{StaticURLTests.user}/',
             'post': f'/{StaticURLTests.user}/{StaticURLTests.post.id}/',

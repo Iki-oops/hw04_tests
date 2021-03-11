@@ -140,4 +140,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 LOGIN_URL = 'auth/login/'
 LOGIN_REDIRECT_URL = 'index'
 
-TEN = 10
+TEN_POSTS = 10

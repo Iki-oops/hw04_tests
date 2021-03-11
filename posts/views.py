@@ -4,12 +4,12 @@ from django.core.paginator import Paginator
 
 from .models import Post, Group, User
 from .forms import PostForm
-from yatube import settings
+from yatube.settings import TEN_POSTS
 
 
 def index(request):
     posts = Post.objects.all()
-    paginator = Paginator(posts, settings.TEN)
+    paginator = Paginator(posts, TEN_POSTS)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {'page': page, 'paginator': paginator}
@@ -19,7 +19,7 @@ def index(request):
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()
-    paginator = Paginator(posts, settings.TEN)
+    paginator = Paginator(posts, TEN_POSTS)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {'group': group, 'page': page, 'paginator': paginator}
@@ -29,7 +29,7 @@ def group_posts(request, slug):
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     author_posts = author.posts.all()
-    paginator = Paginator(author_posts, settings.TEN)
+    paginator = Paginator(author_posts, TEN_POSTS)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     context = {
