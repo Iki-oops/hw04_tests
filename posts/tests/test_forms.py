@@ -54,10 +54,7 @@ class GroupCreateFormTest(TestCase):
         self.assertEqual(Post.objects.count(), posts_count + 1)
         self.assertTrue(Post.objects.last(),
                         Post.objects.filter(
-                            group=group.id,
-                            text='Yo-Yo test',
-                            )
-                        )
+                            group=group.id, text='Yo-Yo test'))
 
     def test_changed_form_data(self):
         post = GroupCreateFormTest.post
