@@ -32,7 +32,8 @@ class PostPagesTest(TestCase):
     def test_pages_uses_correct_template(self):
         template_pages_name = {
             'index.html': reverse('index'),
-            'group.html': reverse('group_posts', args=[PostPagesTest.group.slug]),
+            'group.html': reverse('group_posts',
+                                  args=[PostPagesTest.group.slug]),
             'new_post.html': reverse('new_post'),
             'profile.html': reverse('profile', args=[PostPagesTest.user])
         }
@@ -65,7 +66,8 @@ class PostPagesTest(TestCase):
                 self.assertIsInstance(form_field, excepted)
 
     def test_group_posts_page_show_correct_context(self):
-        response = self.authorized_client.get(f'/group/{PostPagesTest.group.slug}/')
+        response = self.authorized_client.get(
+            f'/group/{PostPagesTest.group.slug}/')
         get_group = response.context.get('group')
         group_title = get_group.title
         group_slug = get_group.slug
@@ -90,7 +92,8 @@ class PostPagesTest(TestCase):
         self.assertEquals(post, response.context.get('page')[0].group)
 
     def test_created_post_in_selected_group(self):
-        response = self.authorized_client.get(f'/group/{PostPagesTest.group.slug}/')
+        response = self.authorized_client.get(
+            f'/group/{PostPagesTest.group.slug}/')
         post = PostPagesTest.post.group
         self.assertEquals(post, response.context.get('page')[0].group)
 
