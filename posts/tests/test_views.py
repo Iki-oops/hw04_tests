@@ -44,7 +44,7 @@ class PostPagesTest(TestCase):
                 self.assertTemplateUsed(response, template)
 
     def test_index_list_show_correct_context(self):
-        response = self.authorized_client.get('/')
+        response = self.authorized_client.get(reverse('index'))
         get_page = response.context.get('page')[0]
         post_text_0 = get_page.text
         post_author_0 = get_page.author
@@ -54,7 +54,7 @@ class PostPagesTest(TestCase):
         self.assertEquals(post_group_0, PostPagesTest.group)
 
     def test_new_post_show_correct_context(self):
-        response = self.authorized_client.get('/new/')
+        response = self.authorized_client.get(reverse('new_post'))
         form_fields = {
             'group': forms.fields.ChoiceField,
             'text': forms.fields.CharField,
@@ -87,7 +87,7 @@ class PostPagesTest(TestCase):
         self.assertEquals(profile_group_0, PostPagesTest.group)
 
     def test_created_post_in_index(self):
-        response = self.authorized_client.get('/')
+        response = self.authorized_client.get(reverse('index'))
         post = PostPagesTest.post.group
         self.assertEquals(post, response.context.get('page')[0].group)
 
@@ -123,7 +123,7 @@ class PaginatorViewsTest(TestCase):
         self.authorized_client.force_login(PaginatorViewsTest.user)
 
     def test_first_page_containse_ten_records(self):
-        response = self.authorized_client.get('/')
+        response = self.authorized_client.get(reverse('index'))
         self.assertEquals(len(response.context.get('page').object_list), 10)
 
     def test_second_page_containse_three_records(self):
