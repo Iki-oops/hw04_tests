@@ -67,7 +67,7 @@ class PostPagesTest(TestCase):
 
     def test_group_posts_page_show_correct_context(self):
         response = self.authorized_client.get(
-            f'/group/{PostPagesTest.group.slug}/')
+            reverse('group_posts', args=[PostPagesTest.group.slug]))
         get_group = response.context.get('group')
         group_title = get_group.title
         group_slug = get_group.slug
@@ -77,7 +77,8 @@ class PostPagesTest(TestCase):
         self.assertEquals(group_description, 'Домашние тесты')
 
     def test_profile_list_show_correct_context(self):
-        response = self.authorized_client.get(f'/{PostPagesTest.user}/')
+        response = self.authorized_client.get(
+            reverse('profile', args=[PostPagesTest.user]))
         get_page = response.context.get('page')[0]
         profile_text_0 = get_page.text
         profile_author_0 = get_page.author
@@ -93,7 +94,7 @@ class PostPagesTest(TestCase):
 
     def test_created_post_in_selected_group(self):
         response = self.authorized_client.get(
-            f'/group/{PostPagesTest.group.slug}/')
+            reverse('group_posts', args=[PostPagesTest.group.slug]))
         post = PostPagesTest.post.group
         self.assertEquals(post, response.context.get('page')[0].group)
 
